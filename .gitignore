@@ -1,0 +1,8 @@
+*.o
+*.so
+*.lib
+*.out
+*.bin
+*.swp
+inventory-where-backend
+inventory-what-frontend
