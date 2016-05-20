@@ -4,4 +4,4 @@ compiler:
 - clang
 os:
 - linux
-script: make all
+script: make clean && make && make test
