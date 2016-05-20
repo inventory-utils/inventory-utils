@@ -24,8 +24,7 @@ obj:
 	mkdir obj
 
 test:
-	# Let's test in TDD (Test Driven Development) manner, if "make test" works in Travis
-	false #binary returns 1, what means in shell "false" or "error"
+	true
 
 clean:
 	rm -f obj/*.o inventory-where-backend #inventory-what-frontend
