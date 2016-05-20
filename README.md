@@ -27,22 +27,15 @@ Under consideration:
 
 ### inventory-where
 
-#### TL;DR-
+Status: *Currently worked on*
 
 `inventory-where` Is responsible for keeping track of "where is given *item*".
 
-#### Abstract Model Behind
-
-For current use-case, I model physical space as [forest][Tree (graph theory)] (or [tree][Tree (graph theory)] with *"root"* abstract starting vertex numbered `0`), where each item is in another item (or *"root"* `0` psudo-item). Items capable of containing other items will be also called *containers*.
-
-#### Tasks
-
-* Collect information about "which *item* is in which *item*.
-* Answer queries:
-  * list tree/forest
-  * show me path to given *item* (from root)
+For more info, please check [inventory-where-README.md].
 
 ### inventory-what
+
+Status: *Gated on inventory-where*
 
 #### TL;DR-
 
@@ -78,3 +71,4 @@ Continuous integration test is setup in `.travis.yml` and dashboard at: https://
 [License compatibility]: https://en.wikipedia.org/wiki/License_compatibility
 [TDD]: https://en.wikipedia.org/wiki/Test-driven_development
 [Tree (graph theory)]: https://en.wikipedia.org/wiki/Tree_(graph_theory)
+[inventory-where-README.md]: https://github.com/inventory-utils/inventory-utils/blob/master/inventory-where-README.md
