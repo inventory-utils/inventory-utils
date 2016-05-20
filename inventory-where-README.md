@@ -45,7 +45,7 @@ itemn
 $++CLOSE_CONTAINER++$
 ```
 
-### Example session
+### Simple Example session
 
 ```
 $++START_SESSION:V00++$
@@ -75,6 +75,58 @@ Describes following [tree][Tree (graph theory)] of things:
         * 34
         * 56
         * 78
+
+
+### Switching modes (TODO)
+
+TODO: switching between adding and removing items will be done via codes:
+
+```
+$++ADDING++$
+$++REMOVING++$
+```
+
+### Adding Key-Values describing items (TODO)
+
+TODO: Adding Key values using `$?=.?$`, e.g. `$key=value$`.
+
+All one and two letter keys are reserved.
+
+Only keys using `[a-zA-Z0-9]` are allowed for user, other are reserved.
+
+### Restricted codes
+
+Using codes starting with `$` can lead to underfined behaviour. (Later plan is to relax restriction to codes starting with `$` and having later at some point `$`).
+
+For special codes it's planned to provide special "verbatim" codes, to enter next line or block of lines "verbatim" as they are.
+
+### Input - summary of special codes
+
+
+Summary of special codes described in this document:
+
+```
+$++START_SESSION:V00++$
+$++START_SESSION:V0++$
+$++EXIT_SESSION++$
+$++OPEN_CONTAINER++$
+$++CLOSE_CONTAINER++$
+```
+
+TODO: Codes to add:
+
+```
+$++ADDING++$
+$++REMOVING++$
+$key=val$
+$++SETTING_KEYVALS++$
+$++PREVIOUS_MODE++$
+$++DUMP++$
+$++CLOSE_ALL++$
+$++RESET_SESSION++$
+```
+
+For special codes it's planned to provide special "verbatim" codes, to enter next line or block of lines "verbatim" as they are.
 
 ## Output
 
