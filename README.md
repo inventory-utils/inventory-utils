@@ -4,3 +4,7 @@
 
 
 [Apache License 2.0]: http://www.apache.org/licenses/LICENSE-2.0.html
+
+# Travis CI - Continous Integration
+
+Continuous integration test is setup in `.travis.yml` and dashboard at: https://travis-ci.org/inventory-utils/
