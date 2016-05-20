@@ -71,4 +71,4 @@ Continuous integration test is setup in `.travis.yml` and dashboard at: https://
 [License compatibility]: https://en.wikipedia.org/wiki/License_compatibility
 [TDD]: https://en.wikipedia.org/wiki/Test-driven_development
 [Tree (graph theory)]: https://en.wikipedia.org/wiki/Tree_(graph_theory)
-[inventory-where-README.md]: https://github.com/inventory-utils/inventory-utils/blob/master/inventory-where-README.md
+[inventory-where-README.md]: https://github.com/inventory-utils/inventory-utils/blob/master/docs/inventory-where-README.md
