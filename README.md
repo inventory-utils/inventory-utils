@@ -21,6 +21,8 @@ For the overall task of items (currently mostly physical with barcodes are in my
 * `inventory-where`
 * `inventory-what`
 
+Modules will be layered, handling what they are supposed to handle, and providing below, resolved `.inv` format data. Basically it will be piped execution, kind of (draft): `./inventory-what -o >( ./inventory-where )` (TODO, provide picture with all pipes, plus bash script on filedescriptors for those who might want to intercept and modify data flow on some pipes).
+
 Under consideration:
 
 * `inventory-contents` - supporting in task of listing contents of containers, like generating lists "what is inside given box" that one can be print and sticked on a box.

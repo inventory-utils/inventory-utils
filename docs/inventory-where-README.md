@@ -94,6 +94,10 @@ All one and two letter keys are reserved.
 
 Only keys using `[a-zA-Z0-9]` are allowed for user, other are reserved.
 
+Some of (considered to be) reserved key-val pairs:
+
+* `$u=...` - unique id. Might be translated by above layer `inventory-what`
+
 ### Restricted codes
 
 Using codes starting with `$` can lead to underfined behaviour. (Later plan is to relax restriction to codes starting with `$` and having later at some point `$`).
