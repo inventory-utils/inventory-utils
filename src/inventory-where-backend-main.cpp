@@ -55,6 +55,8 @@ class item_t {
 	private:
 		iuid_t _my_iuid;
 		void set_iuid(iuid_t id) { _my_iuid = id; }
+		// reset will reset also other fields than iuid if ever appear
+		void reset(iuid_t id) { set_iuid(id); }
 	public:
 		// forbid clone
 		item_t & operator=(const item_t&) = delete;
@@ -69,8 +71,7 @@ class item_t {
 		// timestamp_t timestamp;
 
 		item_t(iuid_t id): _my_iuid(id) {}
-		iuid_t iuid() const {
-			return _my_iuid; }
+		iuid_t iuid() const { return _my_iuid; }
 
 		// modification of _my_iuid require update of translation map in universe_t
 		// that's why only unverse_t is allowed to do that
@@ -84,6 +85,7 @@ class universe_t : public vector<unique_ptr<item_t>> {
 		// To convert temporary iuid to defined (if available) query given item
 		// using item_t::iuit().
 		map<iuid_t, iuid_t> iuid_d2t_map;
+		set<iuid_t> released_items;
 		iuid_t iuid_def2temp(iuid_t defined_id) {
 			if (defined_id.is_temporary_iuid() || defined_id.is_root()) {
 				// it's already temporary iuid, so let's return it
@@ -102,9 +104,24 @@ class universe_t : public vector<unique_ptr<item_t>> {
 			add_new_item();
 		}
 		item_t& add_new_item(){
-			auto i = std::make_unique<item_t>(-size()); // TODO: std::make_uniqueptr()
-			push_back(std::move(i));
-			return *back();
+			if (released_items.empty()) {
+				auto i = std::make_unique<item_t>(-size()); // TODO: std::make_uniqueptr()
+				push_back(std::move(i));
+				return *back();
+			} else {
+				iuid_t id = *released_items.begin();
+				released_items.erase(id);
+				item_t& it = *(at(-id));
+				it.reset(id);
+				return it;
+			}
+		}
+		void remove_item(iuid_t iuid){
+			iuid = iuid_def2temp(iuid);
+			assert(released_items.count(iuid)==0);
+			assert(-iuid < size());
+			released_items.insert(iuid);
+			at(-iuid)->reset(iuid);
 		}
 		item_t& root() {
 			return *(operator[](0));
@@ -131,6 +148,7 @@ class universe_t : public vector<unique_ptr<item_t>> {
 
 int main(){
 	universe_t U;
+	// TODO: turn below into unitests of *datastructures*.{c,h}pp
 	D( U.add_new_item().iuid() );
 	D( U.add_new_item().iuid() );
 	D( U.root().iuid() );
@@ -140,5 +158,16 @@ int main(){
 	D( "Check:" );
 	D( iA.iuid() );
 	D( U.add_new_item().iuid() );
+	D( "Check removal:" );
+	U.remove_item(-2);
+	U.remove_item(-1);
+	D( U.add_new_item().iuid() );
+	D( U.add_new_item().iuid() );
+	D( U.add_new_item().iuid() );
+
+	string inputline;
+	while(getline(cin, inputline)){
+		cout << "# " << inputline << " #" << endl;
+	}
 	return 0;
 }
