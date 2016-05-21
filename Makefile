@@ -3,7 +3,7 @@
 all: inventory-where-backend #inventory-what-frontend
 
 # Most of below are implicit variables, so no need to be set, check: https://www.gnu.org/software/make/manual/html_node/Implicit-Variables.html
-CXXFLAGS=-std=c++11
+CXXFLAGS=-std=c++14
 #CXXFLAGS= #e.g. -I.
 #LIBS= #e.g. -lm
 #DEPS = future_commmon_dependency.h

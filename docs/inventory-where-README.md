@@ -1,3 +1,5 @@
+Grzegorz Wierzowiecki 2016
+
 # inventory-where
 
 
@@ -7,7 +9,7 @@
 
 ## Abstract Model Behind
 
-For current use-case, I model physical space as [forest][Tree (graph theory)] (or [tree][Tree (graph theory)] with *"root"* abstract starting vertex numbered `0`), where each item is in another item (or *"root"* `0` psudo-item). Items capable of containing other items will be also called *containers*.
+For current use-case, I model whole physical space - also called *universe* - as [forest][Tree (graph theory)] (or [tree][Tree (graph theory)] with *"root"* abstract starting vertex numbered `0`), where each item is in another item (or *"root"* `0` psudo-item). Items capable of containing other items will be also called *containers*.
 
 ## Tasks
 
@@ -17,6 +19,18 @@ For current use-case, I model physical space as [forest][Tree (graph theory)] (o
   * show me path to given *item* (from root)
 
 ## "Inventory" Input `.inv` file
+
+### Optional Timestamps before commands
+
+Before each command there can be optional timestamp in [ISO 8601] **and colon and space** format exactly matching following pattern (btw matching `date --iso-8601=seconds`):
+`YYYY-MM-DDTHH:mm:SS+hh:mm: ` ~ `year-month-dayThour:minutes:seconds+timezone_hour:timezone_minutes: `, example `2016-05-21T01:16:00+02:00: ` .
+
+It has to match exactly (including colon and space).
+
+If such timestamp provided, than it will be used during interpretation of command instead of systemclock. (Usefull for replying commands).
+
+(TODO: provide example and unittests with timestamps.)
+
 
 ### Session
 
@@ -140,4 +154,5 @@ Whole session is supposed to be tee-ed into sessions log `.inv` file. As it's co
 
 ## Internal
 
+[ISO 8601]: https://en.wikipedia.org/wiki/ISO_8601
 [Tree (graph theory)]: https://en.wikipedia.org/wiki/Tree_(graph_theory)
