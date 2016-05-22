@@ -38,16 +38,17 @@ Starts with `$++START_SESSION:V00++$` (also `$++START_SESSION:V0++$` should work
 
 ### Basic structure of putting *items* into *containers*
 
-Interleaved line pairs:
+We start from *root* AKA *universe*.
+We list *items*/*containers*.
 
-```
-container-id
-item-id
-```
+If we want to list contents of given container we list it's contents between `$++OPEN_CONTAINER++$` and `$++CLOSE_CONTAINER++$` block.
+If such contains other containers, we can continue doing this.
 
-Describing that in given *container*, given *item* is placed.
+<!--
+The same applies if we describe which items are removed - we start from *root* AKA *universe*, then we open containers, once we reach the items to be removed.
+-->
 
-For convenience of putting more *items* into given *container*, we can open and close it:
+Here is how does look putting more *items* into given *container*, we can open and close it:
 
 ```
 container-id
@@ -59,14 +60,25 @@ itemn
 $++CLOSE_CONTAINER++$
 ```
 
+<!--
+
+Interleaved line pairs:
+
+```
+container-id
+item-id
+```
+
+Describing that in given *container*, given *item* is placed.
+
+-->
+
 ### Simple Example session
 
 ```
 $++START_SESSION:V00++$
 1234
 5678
-1234
-9012
 98765
 $++OPEN_CONTAINER++$
 12
@@ -74,6 +86,7 @@ $++OPEN_CONTAINER++$
 56
 78
 $++CLOSE_CONTAINER++$
+9012
 $++EXIT_SESSION++$
 
 ```
@@ -82,13 +95,13 @@ Describes following [tree][Tree (graph theory)] of things:
 
 * Universe
     * 1234
-        * 5678
-        * 9012
+    * 5678
     * 98765
         * 12
         * 34
         * 56
         * 78
+    * 9012
 
 
 ### Switching modes (TODO)

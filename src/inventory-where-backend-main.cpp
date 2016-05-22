@@ -201,6 +201,9 @@ class universe_t : public vector<unique_ptr<item_t>> {
 			path.push_back(id);
 			while(id!=0){
 				id = get_item(id).parent_iuid();
+				// do not print root if name is unspecified.
+				if (id==0 && ! get_item(id).has_key("."))
+					break;
 				path.push_back(id);
 			}
 			std::reverse(path.begin(), path.end());
@@ -243,6 +246,7 @@ int main(){
 
 	// in which containers are we in. Starting from root/universe.
 	iuid_t current_container_iuid = 0;
+	iuid_t last_added_item_iuid = 0;
 
 	string inputline;
 	cerr << "Waiting for $++START_SESSION:V00++$ code." << endl;
@@ -265,6 +269,8 @@ int main(){
 		// log.dumpline(inputline);
 		if (starts_with(inputline, "$++EXIT_SESSION++$")) {
 		    break;
+		} else if (starts_with(inputline, "$++OPEN_CONTAINER++$")) {
+			current_container_iuid = last_added_item_iuid;
 		} else if (starts_with(inputline, "$++CLOSE_CONTAINER++$")) {
 			current_container_iuid = U.get_item(current_container_iuid).parent_iuid();
 		} else if (starts_with(inputline, "$++CLOSE_ALL++$")) {
@@ -279,21 +285,14 @@ int main(){
 					auto& it = U.get_item(id);
 					D( it.code() );
 					D( U.path_as_string_to(id) );
+					cout << U.path_as_string_to(id) << endl;
 				}
 			}
-		} else {
+		} else{
 			// We have new item to be added/removed into/from current container
 			const auto& code = inputline;
 			auto& it = U.add_new_item(current_container_iuid, code);
-			if (getline(cin,inputline)) {
-				if (starts_with(inputline, "$++OPEN_CONTAINER++$")) {
-					current_container_iuid = it.iuid();
-				} else {
-					const auto& code = inputline;
-					D( code );
-					auto& it2 = U.add_new_item(it.iuid(), code);
-				}
-			}
+			last_added_item_iuid = it.iuid();
 		}
 	}
 	if (starts_with(inputline, "$++EXIT_SESSION++$")) {
