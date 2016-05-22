@@ -66,7 +66,7 @@ In order to provide framework for [TDD] (Test Driven Development), skeleton prov
 
 ## Travis CI - Continous Integration
 
-Continuous integration test is setup in `.travis.yml` and dashboard at: https://travis-ci.org/inventory-utils/
+Continuous integration test is setup in `.travis.yml` and dashboard for all branches at: https://travis-ci.org/inventory-utils/inventory-utils/branches
 
 [KISS principle]: https://en.wikipedia.org/wiki/KISS_principle
 [License compatibility diagram]: https://en.wikipedia.org/wiki/File:Floss-license-slide-image.png
