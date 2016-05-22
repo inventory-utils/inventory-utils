@@ -23,6 +23,8 @@ For the overall task of items (currently mostly physical with barcodes are in my
 
 Modules will be layered, handling what they are supposed to handle, and providing below, resolved `.inv` format data. Basically it will be piped execution, kind of (draft): `./inventory-what -o >( ./inventory-where )` (TODO, provide picture with all pipes, plus bash script on filedescriptors for those who might want to intercept and modify data flow on some pipes).
 
+Modules might prefix their input with timestamp, to allow other layers to interpret with same timestamp, or allow future replay of logs with same timestamps.
+
 Under consideration:
 
 * `inventory-contents` - supporting in task of listing contents of containers, like generating lists "what is inside given box" that one can be print and sticked on a box.
@@ -68,6 +70,7 @@ In order to provide framework for [TDD] (Test Driven Development), skeleton prov
 
 Continuous integration test is setup in `.travis.yml` and dashboard for all branches at: https://travis-ci.org/inventory-utils/inventory-utils/branches
 
+[ISO 8601]: https://en.wikipedia.org/wiki/ISO_8601
 [KISS principle]: https://en.wikipedia.org/wiki/KISS_principle
 [License compatibility diagram]: https://en.wikipedia.org/wiki/File:Floss-license-slide-image.png
 [License compatibility]: https://en.wikipedia.org/wiki/License_compatibility

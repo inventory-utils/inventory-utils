@@ -1,3 +1,5 @@
+Grzegorz Wierzowiecki 2016
+
 # inventory-where
 
 
@@ -7,7 +9,7 @@
 
 ## Abstract Model Behind
 
-For current use-case, I model physical space as [forest][Tree (graph theory)] (or [tree][Tree (graph theory)] with *"root"* abstract starting vertex numbered `0`), where each item is in another item (or *"root"* `0` psudo-item). Items capable of containing other items will be also called *containers*.
+For current use-case, I model whole physical space - also called *universe* - as [forest][Tree (graph theory)] (or [tree][Tree (graph theory)] with *"root"* abstract starting vertex numbered `0`), where each item is in another item (or *"root"* `0` psudo-item). Items capable of containing other items will be also called *containers*.
 
 ## Tasks
 
@@ -18,22 +20,35 @@ For current use-case, I model physical space as [forest][Tree (graph theory)] (o
 
 ## "Inventory" Input `.inv` file
 
+### Optional Timestamps before commands
+
+Before each command there can be optional timestamp in [ISO 8601] **and colon and space** format exactly matching following pattern (btw matching `date --iso-8601=seconds`):
+`YYYY-MM-DDTHH:mm:SS+hh:mm: ` ~ `year-month-dayThour:minutes:seconds+timezone_hour:timezone_minutes: `, example `2016-05-21T01:16:00+02:00: ` .
+
+It has to match exactly (including colon and space).
+
+If such timestamp provided, than it will be used during interpretation of command instead of systemclock. (Usefull for replying commands).
+
+(TODO: provide example and unittests with timestamps.)
+
+
 ### Session
 
 Starts with `$++START_SESSION:V00++$` (also `$++START_SESSION:V0++$` should work for V00..V09 revisions), should end with `$++EXIT_SESSION++$`.
 
 ### Basic structure of putting *items* into *containers*
 
-Interleaved line pairs:
+We start from *root* AKA *universe*.
+We list *items*/*containers*.
 
-```
-container-id
-item-id
-```
+If we want to list contents of given container we list it's contents between `$++OPEN_CONTAINER++$` and `$++CLOSE_CONTAINER++$` block.
+If such contains other containers, we can continue doing this.
 
-Describing that in given *container*, given *item* is placed.
+<!--
+The same applies if we describe which items are removed - we start from *root* AKA *universe*, then we open containers, once we reach the items to be removed.
+-->
 
-For convenience of putting more *items* into given *container*, we can open and close it:
+Here is how does look putting more *items* into given *container*, we can open and close it:
 
 ```
 container-id
@@ -45,14 +60,25 @@ itemn
 $++CLOSE_CONTAINER++$
 ```
 
+<!--
+
+Interleaved line pairs:
+
+```
+container-id
+item-id
+```
+
+Describing that in given *container*, given *item* is placed.
+
+-->
+
 ### Simple Example session
 
 ```
 $++START_SESSION:V00++$
 1234
 5678
-1234
-9012
 98765
 $++OPEN_CONTAINER++$
 12
@@ -60,6 +86,7 @@ $++OPEN_CONTAINER++$
 56
 78
 $++CLOSE_CONTAINER++$
+9012
 $++EXIT_SESSION++$
 
 ```
@@ -68,13 +95,13 @@ Describes following [tree][Tree (graph theory)] of things:
 
 * Universe
     * 1234
-        * 5678
-        * 9012
+    * 5678
     * 98765
         * 12
         * 34
         * 56
         * 78
+    * 9012
 
 
 ### Switching modes (TODO)
@@ -140,4 +167,5 @@ Whole session is supposed to be tee-ed into sessions log `.inv` file. As it's co
 
 ## Internal
 
+[ISO 8601]: https://en.wikipedia.org/wiki/ISO_8601
 [Tree (graph theory)]: https://en.wikipedia.org/wiki/Tree_(graph_theory)
